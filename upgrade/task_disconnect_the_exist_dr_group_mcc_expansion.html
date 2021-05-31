@@ -1,0 +1,3242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head class="at-element-marker">
+  <title>Disconnecting the existing DR group from the fabric</title>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge,chrome=1">
+  <meta http-equiv="language" content="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="Disconnecting the existing DR group from the fabric" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://docs.netapp.com/us-en/ontap-metrocluster/upgrade/task_disconnect_the_exist_dr_group_mcc_expansion.html" />
+	<meta property="og:description" content="You must disconnect the existing controller modules from the FC switches in the fabric." />
+  <meta property="og:image" content="https://docs.netapp.com/us-en/ontap-metrocluster/images/logo-tophat-social.png" />
+  <meta property="og:image:alt" content="NetApp Logo" />
+  <meta name="format-detection" content="telephone=no">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="encoding" content="utf-8">
+  <meta http-equiv="nss-type" content="Product Documentation"/>
+  <meta http-equiv="nss-subtype" content="User Guide"/>
+  
+  <meta name="description" content="You must disconnect the existing controller modules from the FC switches in the fabric.">
+  <meta name="keywords" content=" metrocluster, upgrade, disconnect, existing, dr, group, fabric">
+  
+  
+
+  <!-- Icons -->
+  <link rel="icon" href="/us-en/ontap-metrocluster/images/favicon.ico" type="image/x-icon">
+
+  <!-- RSS Feed -->
+  
+
+  <!-- CSS Definitions: NetApp CSS should be defined after generic css -->
+
+  <!-- Elastic Search -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/searchkit/0.10.0/theme.css">
+
+  <!-- Controls AsciiDoctor Admonition Blocks -->
+  <link rel="stylesheet" type="text/css" href="/us-en/ontap-metrocluster/css/font-awesome.min.css">
+
+  <!-- Controls the shadow effect for search dropdown menu -->
+  <link rel="stylesheet" href="/us-en/ontap-metrocluster/css/boxshadowproperties.css">
+
+  <!-- NetApp CSS controls the technical content -->
+  <link rel="stylesheet" type="text/css" href="/us-en/ontap-metrocluster/css/netapp.css">
+
+  <!-- WWW CSS Content -->
+  <link rel="stylesheet" type="text/css" href="/us-en/ontap-metrocluster/css/www-luci-dotcom.min.css">
+  <link rel="stylesheet" type="text/css" href="/us-en/ontap-metrocluster/css/www-netapp-dotcom.css">
+  <link rel="stylesheet" href="/us-en/ontap-metrocluster/css/www-netapp-library-critical.min.css" media="all" >
+  <link rel="stylesheet" href="/us-en/ontap-metrocluster/css/www-netapp-library-non-critical.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="stylesheet" href="/us-en/ontap-metrocluster/css/www-netapp-library-global-header-footer.min.css">
+
+  <!-- NetApp IE Customizations -->
+  <link rel="stylesheet" href='/us-en/ontap-metrocluster/css/na-utility.css' type='text/css'>
+  <link rel="stylesheet" href='/us-en/ontap-metrocluster/css/na-sidebar.css' type='text/css'>
+  <link rel='stylesheet' href='/us-en/ontap-metrocluster/css/clouddocs.css' type='text/css'>
+  <link rel='stylesheet' href='/us-en/ontap-metrocluster/css/na-pagenav.css' type='text/css'>
+
+  
+  <link rel="stylesheet" href="/us-en/ontap-metrocluster/css/astra.css" type="text/css">
+  
+
+  
+  <link rel='stylesheet' href='/us-en/ontap-metrocluster/css/na-feature.css' type='text/css'>
+  
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+  <!-- Used to import Promise for IE. Required for SearchKit -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.5/bluebird.min.js"></script>
+  
+    <script src='/us-en/ontap-metrocluster/js/na-search.js'></script>
+  
+
+  
+  <script src='/us-en/ontap-metrocluster/js/na-pagenav.js'></script>
+  
+
+  <link rel='stylesheet' href='/us-en/ontap-metrocluster/css/prism.css' type='text/css'>
+  <link rel='stylesheet' href='/us-en/ontap-metrocluster/css/prism-netapp.css' type='text/css'>
+
+
+  <script src='/us-en/ontap-metrocluster/js/na-utility.js'></script>
+  <script src='/us-en/ontap-metrocluster/js/clouddocs.js'></script>
+  <script>
+  if (document.location.hostname === "docs.netapp.com") {
+    var head = document.getElementsByTagName('head')[0];
+    var adobe = document.createElement("script");
+    adobe.type = "text/javascript";
+    adobe.src = "//assets.adobedtm.com/60287eadf1ee/c284da483c83/launch-e9ff3acac59f.min.js";
+    head.appendChild(adobe);
+  }
+  </script>
+  <script src='/us-en/ontap-metrocluster/js/jquery.navgoco.min.js'></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src='/us-en/ontap-metrocluster/js/toc.js'></script>
+  <script src='/us-en/ontap-metrocluster/js/customscripts.js'></script>
+
+  <script>
+      $(document).ready(function() {
+          
+          var collapseOnInit = true;
+          
+
+          var navSettings = {
+              "caretHtml": '',
+              "accordion": collapseOnInit,
+              "openClass": 'active', // open
+              "save": false, // leave false or nav highlighting doesn't work right
+              "cookie": {
+                  "name": 'navgoco',
+                  "expires": false,
+                  "path": '/'
+              },
+              "slide": {
+                  "duration": 400,
+                  "easing": 'swing'
+              }
+          };
+
+          // Initialize navgoco with default options
+          $("#mysidebar").navgoco(navSettings);
+          
+
+          $("#collapseAll").click(function(e) {
+              e.preventDefault();
+              $("#mysidebar").navgoco('toggle', false);
+          });
+
+          $("#expandAll").click(function(e) {
+              e.preventDefault();
+              $("#mysidebar").navgoco('toggle', true);
+          });
+
+      });
+
+  </script>
+  <script>
+      $(document).ready(function() {
+          $("#tg-sb-link").click(function() {
+              $("#tg-sb-sidebar").toggle();
+              $("#tg-sb-content").toggleClass('col-md-9');
+              $("#tg-sb-content").toggleClass('col-md-12');
+              $("#tg-sb-icon").toggleClass('fa-toggle-on');
+              $("#tg-sb-icon").toggleClass('fa-toggle-off');
+          });
+      });
+  </script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-81697994-3"></script>
+  <script>
+  if (document.location.hostname === "docs.netapp.com") {
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-81697994-3');
+  }
+  </script>
+</head>
+
+
+  <body class role="document">
+    <div id="page" class="n-off-canvas-menu">
+      <div class="n-off-canvas-menu__menu"><!--TODO: Add offcanvas code --></div>
+      <div class="n-off-canvas-menu__content-wrap">
+        <header class="site-header" id="banner">
+  <!-- Start top_hat -->
+  <div class="n-top-hat">
+    <div class="n-container">
+      <div class="n-top-hat__cross-property-nav">
+        <ul class="n-top-hat__list">
+          <li class="n-top-hat__list-item">
+            <a href="https://www.netapp.com/products-a-z/" class="n-top-hat__link">Product and Solutions</a>
+          </li>
+          <li class="n-top-hat__list-item">
+            <a href="https://www.netapp.com/support-and-training/netapp-university/" class="n-top-hat__link">Support and Training</a>
+          </li>
+          <li class="n-top-hat__list-item">
+            <a href="https://cloud.netapp.com" class="n-top-hat__link">Cloud Central</a>
+          </li>
+          <li class="n-top-hat__list-item">
+            <a href="https://community.netapp.com/" class="n-top-hat__link">Community</a>
+          </li>
+          <li class="n-top-hat__list-item">
+            <a href="https://blog.netapp.com/" class="n-top-hat__link">Blog</a>
+          </li>
+          <li class="n-top-hat__list-item">
+            <a href="https://customers.netapp.com/en/" class="n-top-hat__link">Customer Stories</a>
+          </li>
+          <li class="n-top-hat__list-item">
+            <a href="https://www.netapp.com/us/contact-us/index.aspx" target="_self" class="n-top-hat__link" data-ntap-ui="contact-us">Contact</a>
+          </li>
+        </ul>
+      </div>
+      <div class="n-top-hat__utils">
+        <ul class="n-top-hat__list">
+          <li class="n-top-hat__list-item">
+            <a href="https://www.netapp.com/us/contact-us/index.aspx" target="_self" class="n-top-hat__link" data-ntap-ui="contact-us">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- End top_hat -->
+
+  <!-- Start property bar -->
+  <style>
+    .n-property-navigation-bar__menus--desktop-experience .n-menu--mega__default-content__heading span {
+    color: #34B0FF;
+    }
+  </style>
+  <div class="n-property-bar " data-ntap-ui="sticky-nav">
+    <div class="n-property-bar__inner-wrap">
+      <div class="n-property-bar__menu-toggle">
+        <a href="#" class="n-property-bar__menu-toggle-link">
+          <span class="n-property-bar__menu-toggle-text">Menu</span>
+          <svg class="n-icon-bars n-property-bar__menu-toggle-icon" aria-labelledby="title">
+            <title>bars</title>
+            <use xlink:href="/us-en/ontap-metrocluster/common/svg/sprite.svg#bars"></use>
+          </svg>
+        </a>
+      </div>
+      <div class="n-property-bar__property-mark ">
+        <a href="https://www.netapp.com" class="n-property-bar__property-link">
+          <div class="n-property-bar__logo">
+            <svg class="n-icon-netapp-mark n-icon-netapp-mark n-property-bar__netapp-mark-icon" aria-labelledby="title">
+              <title>netapp-mark</title>
+              <use xlink:href="/us-en/ontap-metrocluster/common/svg/sprite.svg#netapp-mark"></use>
+            </svg>
+            <svg class="n-icon-netapp-logo n-property-bar__logo-svg" aria-labelledby="title">
+              <title>netapp-logo</title>
+              <use xlink:href="/us-en/ontap-metrocluster/common/svg/sprite.svg#netapp-logo"></use>
+            </svg>
+          </div>
+        </a>
+      </div>
+
+      
+      <div class="search-property-bar">
+        <div id="search-demo-container" class="searchbox n-property-bar__search">
+          <div id="react-search" data-type="widget" data-placeholder="Search Documentation" data-no-results-found="No results were found for {query}" data-did-you-mean="Search for {suggestion}." data-no-results-found-did-you-mean="No results found for {query}. Did you mean {suggestion}?" data-results-found="{hitCount} results found"  ></div>
+          <button class="n-property-bar__search-toggle-button" type="button">
+            <svg class="n-icon-search n-property-bar__search-toggle-button-icon" aria-labelledby="title">
+              <title>search</title>
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/us-en/ontap-metrocluster/common/svg/sprite.svg#search"></use>
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <div class="n-property-bar__toolbar"><!-- Start Language Selector --><!-- End Language Selector -->
+
+    <div class="n-property-bar__cta"></div>
+  </div>
+  <script>
+    $(function(){
+        var currentLocalization = $('html').attr('lang');
+
+        var localizationsDictionary = {
+            "en-CA" : "https://www.netapp.com/search/index.aspx?for_cr=canada&",
+            "en-IN" : "https://www.netapp.com/search/index.aspx?for_cr=india&",
+            "nl-NL" : "https://www.netapp.com/search/index.aspx?for_cr=netherlands&",
+            "ru-RU" : "https://www.netapp.com/search/index.aspx?for_cr=russia&",
+            "sv-SE" : "https://www.netapp.com/search/index.aspx?for_cr=sweden&",
+            "it-IT" : "https://www.netapp.com/search/index.aspx?for_cr=italy&",
+            "he-IL" : "https://www.netapp.com/search/index.aspx?for_cr=israel&",
+            "ko-KR" : "https://www.netapp.com/search/index.aspx?for_cr=korea&",
+            "zh-TW" : "https://www.netapp.com/search/index.aspx?for_cr=taiwan&",
+            "en-GB" : "https://www.netapp.com/search/index.aspx?for_cr=unitedkingdom&",
+            "en-SG" : "https://www.netapp.com/search/index.aspx?for_cr=asean&",
+            "en-AU" : "https://www.netapp.com/search/index.aspx?for_cr=australia&",
+            "pt-BR" : "https://www.netapp.com/search/index.aspx?for_cr=brasil&",
+            "de-CH" : "https://www.netapp.com/search/index.aspx?for_cr=switzerland&",
+            "es-MX" : "https://www.netapp.com/search/index.aspx?for_cr=mexico&"
+        };
+
+        if($('html').hasClass('ntap-whitelisted') && localizationsDictionary.hasOwnProperty(currentLocalization)) {
+            $('.n-property-bar__property-link').attr('href', '/');
+        }
+    });
+  </script>
+  <!-- End property bar -->
+</header>
+
+        <div class="ie-utility">
+  <div class="ie-menu">
+    <div class="n-breadcrumb">
+      <ul class="n-breadcrumb__list">
+        <li class="n-breadcrumb__list-item">
+          <a href="https://www.netapp.com">Home</a>
+        </li>
+        <li class="n-breadcrumb__list-item">
+          <a href="https://docs.netapp.com">Documentation</a>
+        </li>
+        
+
+        <li class="n-breadcrumb__list-item">
+          <a href="/us-en/ontap-metrocluster/">ONTAP&nbsp;MetroCluster</a>
+        </li>
+        <li class="n-breadcrumb__list-item">
+          Disconnecting the existing DR group from the fabric
+        </li>
+      </ul>
+    </div>
+
+    <div style="clear: both"></div><!-- Main needs to have height -->
+  </div>
+</div>
+
+
+        <main id="n-main-content" class="n-main-content">
+          <!-- Start Documentation Content -->
+<div class="ie-main">
+  <!-- Sidebar Column -->
+  
+  <div class="col-md-3" >
+      <div class="n-pdf-header">
+  <a id="toggleButtonPdf" class="n-pdf-button" type="button">PDFs<span>
+    </span>
+  </a>
+</div>
+<ul id="toggleContainerPdf" class="n-pdf-body" style="display:none;"><div class="n-pdf-section">
+      <span class="n-pdf-section-title">Site</span>
+    </div>
+    <li>
+      <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/fullsite-sidebar/MetroCluster_Documentation.pdf" >
+        <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+        MetroCluster Documentation
+      </a>
+    </li>
+
+
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+          <div class="n-pdf-section">
+            <span class="n-pdf-section-title">
+              Sections
+            </span>
+          </div>
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Install_a_fabric_attached_MetroCluster.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Install a fabric-attached MetroCluster
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Cabling_a_fabric_attached_MetroCluster_configuration.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Cabling a fabric-attached MetroCluster configuration
+          </a>
+        </li>
+        <span>
+          
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Parts_of_a_fabric_MetroCluster_configuration.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Parts of a fabric MetroCluster configuration
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Installing_and_cabling_MetroCluster_components.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Installing and cabling MetroCluster components
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Configuring_the_FC_switches.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Configuring the FC switches
+          </a>
+        </li>
+        <span>
+          
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Configuring_Brocade_FC_switches_with_RCF_files.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Configuring Brocade FC switches with RCF files
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Configuring_the_Cisco_FC_switches_with_RCF_files.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Configuring the Cisco FC switches with RCF files
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Configuring_hardware_for_sharing_a_Brocade_6510_FC_fabric_during_transition.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Configuring hardware for sharing a Brocade 6510 FC fabric during transition
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Configuring_switch_fabrics_sharing_between_the_7_Mode_and_clustered_MetroCluster_configuration.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Configuring switch fabrics sharing between the 7-Mode and clustered MetroCluster configuration
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Planning_and_installing_a_MetroCluster_configuration_with_array_LUNs.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Planning and installing a MetroCluster configuration with array LUNs
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Installing_and_cabling_the_MetroCluster_components_in_a_configuration_with_array_LUNs.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Installing and cabling the MetroCluster components in a configuration with array LUNs
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Cabling_the_FC_VI_and_HBA_ports_in_a_MetroCluster_configuration_with_array_LUNs.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Cabling the FC-VI and HBA ports in a MetroCluster configuration with array LUNs
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Cabling_storage_arrays_to_FC_switches_in_a_MetroCluster_configuration.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Cabling storage arrays to FC switches in a MetroCluster configuration
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Switch_zoning_in_a_MetroCluster_configuration_with_array_LUNs.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Switch zoning in a MetroCluster configuration with array LUNs
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Setting_up_ONTAP_in_a_MetroCluster_configuration_with_array_LUNs.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Setting up ONTAP in a MetroCluster configuration with array LUNs
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Implementing_a_MetroCluster_configuration_with_both_disks_and_array_LUNs.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Implementing a MetroCluster configuration with both disks and array LUNs
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Using_the_Active_IQ_Unified_Manager_and_ONTAP_System_Manager_for_further_configuration_and_monitoring.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Using the Active IQ Unified Manager and ONTAP System Manager for further configuration and monitoring
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+          <div class="n-pdf-section">
+            <span class="n-pdf-section-title">
+              Sections
+            </span>
+          </div>
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Install_a_MetroCluster_IP_configuration.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Install a MetroCluster IP configuration
+          </a>
+        </li>
+        <span>
+          
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Preparing_for_the_MetroCluster_installation.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Preparing for the MetroCluster installation
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Configuring_the_MetroCluster_hardware_components.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Configuring the MetroCluster hardware components
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Configuring_the_ONTAP_Mediator_service_for_unplanned_automatic_switchover.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Configuring the ONTAP Mediator service for unplanned automatic switchover
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+          <div class="n-pdf-section">
+            <span class="n-pdf-section-title">
+              Sections
+            </span>
+          </div>
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Install_a_stretch_MetroCluster_configuration.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Install a stretch MetroCluster configuration
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Cabling_a_two_node_SAS_attached_stretch_MetroCluster_configuration.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Cabling a two-node SAS-attached stretch MetroCluster configuration
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Installing_and_cabling_MetroCluster_components_for_two_node_SAS_attached_stretch_configurations.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Installing and cabling MetroCluster components for two-node SAS-attached stretch configurations
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Cabling_a_two_node_bridge_attached_stretch_MetroCluster_configuration.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Cabling a two-node bridge-attached stretch MetroCluster configuration
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Installing_and_cabling_MetroCluster_components.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Installing and cabling MetroCluster components
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+
+
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Connections_in_a_stretch_MetroCluster_configurations_with_array_LUNs.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Connections in a stretch MetroCluster configurations with array LUNs
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Using_the_Active_IQ_Unified_Manager_and_ONTAP_System_Manager_for_further_configuration_and_monitoring.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Using the Active IQ Unified Manager and ONTAP System Manager for further configuration and monitoring
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+          <div class="n-pdf-section">
+            <span class="n-pdf-section-title">
+              Sections
+            </span>
+          </div>
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Maintain_the_MetroCluster_components.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Maintain the MetroCluster components
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Performing_FC_to_SAS_bridge_maintenance.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Performing FC-to-SAS bridge maintenance
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Performing_FC_switch_maintenance_and_replacement.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Performing FC switch maintenance and replacement
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Performing_IP_switch_maintenance_and_replacement.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Performing IP switch maintenance and replacement
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Hot_adding_storage_to_a_MetroCluster_FC_configuration.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Hot-adding storage to a MetroCluster FC configuration
+          </a>
+        </li>
+        <span>
+          
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Hot_adding_SAS_storage_to_a_bridge_attached_MetroCluster_FC_configuration.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Hot-adding SAS storage to a bridge-attached MetroCluster FC configuration
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Hot_adding_a_SAS_disk_shelf_to_a_stack_of_SAS_disk_shelves.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Hot-adding a SAS disk shelf to a stack of SAS disk shelves
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Port_assignments_for_FC_switches.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Port assignments for FC switches
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+          <div class="n-pdf-section">
+            <span class="n-pdf-section-title">
+              Sections
+            </span>
+          </div>
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Performing_switchover__healing__and_switchback.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Performing switchover, healing, and switchback
+          </a>
+        </li>
+        <span>
+          
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Performing_switchover_for_tests_or_maintenance.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Performing switchover for tests or maintenance
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Healing_the_configuration.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Healing the configuration
+          </a>
+        </li>
+        <span>
+          
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Healing_the_configuration_in_a_MetroCluster_FC_configuration.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Healing the configuration in a MetroCluster FC configuration
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+          <div class="n-pdf-section">
+            <span class="n-pdf-section-title">
+              Sections
+            </span>
+          </div>
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Install_and_Configure_MetroCluster_Tiebreaker.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Install and Configure MetroCluster Tiebreaker
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+          <div class="n-pdf-section">
+            <span class="n-pdf-section-title">
+              Sections
+            </span>
+          </div>
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Transition_from_MetroCluster_FC_to_MetroCluster_IP.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Transition from MetroCluster FC to MetroCluster IP
+          </a>
+        </li>
+        <span>
+          
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Transitioning_nondisruptively_from_a_MetroCluster_FC_to_a_MetroCluster_IP_configuration__ONTAP_9_8_and_later_.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Transitioning nondisruptively from a MetroCluster FC to a MetroCluster IP configuration (ONTAP 9.8 and later)
+          </a>
+        </li>
+        <span>
+          
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Preparing_for_transition_from_a_MetroCluster_FC_to_a_MetroCluster_IP_configuration.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Preparing for transition from a MetroCluster FC to a MetroCluster IP configuration
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Disruptively_transitioning_from_a_two_node_MetroCluster_FC_to_a_four_node_MetroCluster_IP_configuration__ONTAP_9_8_and_later_.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Disruptively transitioning from a two-node MetroCluster FC to a four-node MetroCluster IP configuration (ONTAP 9.8 and later)
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+          <div class="n-pdf-section">
+            <span class="n-pdf-section-title">
+              Sections
+            </span>
+          </div>
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Upgrade_or_expand_the_MetroCluster_configuration.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Upgrade or expand the MetroCluster configuration
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Expanding_a_two_node_MetroCluster_FC_configuration_to_a_four_node_configuration.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Expanding a two-node MetroCluster FC configuration to a four-node configuration
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Adding_a_new_controller_module_to_each_cluster.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Adding a new controller module to each cluster
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Installing_and_cabling_the_new_controller_module.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Installing and cabling the new controller module
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Configuring_intercluster_LIFs.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Configuring intercluster LIFs
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Expanding_a_four_node_MetroCluster_FC_configuration_to_an_eight_node_configuration.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Expanding a four-node MetroCluster FC configuration to an eight-node configuration
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Recabling_and_zoning_a_switch_fabric_for_the_new_nodes.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Recabling and zoning a switch fabric for the new nodes
+          </a>
+        </li>
+        <span>
+          
+    <div class="n-pdf-section">
+  <span class="n-pdf-section-title">This page</span>
+</div>
+
+<li class="active">
+  <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/pages/upgrade/task_disconnect_the_exist_dr_group_mcc_expansion.pdf" >
+    <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+    Disconnecting the existing DR group from the fabric
+  </a>
+</li>
+
+
+  
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Configuring_ONTAP_on_the_new_controllers.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Configuring ONTAP on the new controllers
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Configuring_the_clusters_into_a_MetroCluster_configuration.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Configuring the clusters into a MetroCluster configuration
+          </a>
+        </li>
+        <span>
+          
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Configuring_intercluster_LIFs.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Configuring intercluster LIFs
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+          <div class="n-pdf-section">
+            <span class="n-pdf-section-title">
+              Sections
+            </span>
+          </div>
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Disaster_Recovery.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Disaster Recovery
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+    
+      <span class="subfolders" style="display:none;">
+        
+        <li>
+          <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/sidebar/Recovering_from_a_multi_controller_or_storage_failure.pdf" >
+            <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>
+            Recovering from a multi-controller or storage failure
+          </a>
+        </li>
+        <span>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+
+
+          
+        </span>
+      </span>
+    
+
+  
+
+
+
+
+</ul>
+
+<script>
+  $("#toggleContainerPdf li.active").parents('li').toggle('display');
+  $("#toggleContainerPdf li.active").parents('span.subfolders').toggle('display');
+  $("#toggleButtonPdf").click(function () {
+    $("#toggleContainerPdf").toggle('display');
+  });
+</script><ul id="mysidebar" class="nav"><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/index.html">
+        MetroCluster
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/releasenotes.html">
+        Release Notes
+      </a></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/install-fc/index.html">
+        <div class="na-navbar-padding"> Install a fabric-attached MetroCluster</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/concept_deciding_whether_to_use_this_guide_fabric_attached_mcc_installation_and_configuration_guide.html">
+        Deciding whether to use the Fabric-attached MetroCluster Installation and Configuration Guide
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/concept_prepare_for_the_mcc_installation.html">
+        Preparing for the MetroCluster installation
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/concept_choosing_the_correct_installation_procedure_for_your_configuration_mcc_install.html">
+        Choosing the correct installation procedure for your configuration
+      </a></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/install-fc/task_configure_the_mcc_hardware_components_fabric.html">
+        <div class="na-navbar-padding"> Cabling a fabric-attached MetroCluster configuration</div>
+      </a>
+      <ul><li class="subfolders "><a href="/us-en/ontap-metrocluster/install-fc/concept_parts_of_a_fabric_mcc_configuration.html">
+        <div class="na-navbar-padding"> Parts of a fabric MetroCluster configuration</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/concept_illustration_of_the_local_ha_pairs_in_a_mcc_configuration.html">
+        Illustration of the local HA pairs in a MetroCluster configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/concept_illustration_of_redundant_fc_to_sas_bridges.html">
+        Illustration of redundant FC-to-SAS bridges
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/concept_redundant_fc_switch_fabrics.html">
+        Redundant FC switch fabrics
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/concept_cluster_peering_network_mcc.html">
+        Illustration of the cluster peering network
+      </a></li></ul></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/concept_required_mcc_components_and_naming_conventions_fabric_mcc.html">
+        Required MetroCluster FC components and naming conventions
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/reference_configuration_gathering_worksheet_for_fc_switches_and_fc_to_sas_bridges.html">
+        Configuration worksheet for FC switches and FC-to-SAS bridges
+      </a></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/install-fc/task_install_and_cable_the_mcc_components.html">
+        <div class="na-navbar-padding"> Installing and cabling MetroCluster components</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_rack_the_hardware_components_mcc_fabric_and_ip.html">
+        Racking the hardware components
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_cable_the_controller_module_s_fc_vi_hba_ports_to_the_fc_switches_controller_to_fc_sw.html">
+        Cabling the new controller module&#8217;s FC-VI and HBA ports to the FC switches
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_cable_the_isl_between_the_mcc_sites_fabric_config.html">
+        Cabling the ISLs between MetroCluster sites
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/concept_port_assignments_for_systems_using_two_initiator_ports.html">
+        Port assignments for systems using two initiator ports
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/concept_port_assignments_for_fc_switches_when_using_ontap_9_0.html">
+        Port assignments for FC switches when using ONTAP 9.0
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/concept_port_assignments_for_fc_switches_when_using_ontap_9_1_and_later.html">
+        Port assignments for FC switches when using ONTAP 9.1 and later
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_cable_the_cluster_interconnect_in_four_node_configurations.html">
+        Cabling the cluster interconnect in eight- or four-node configurations
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_cable_the_cluster_peering_connections.html">
+        Cabling the cluster peering connections
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_cable_the_ha_interconnect.html">
+        Cabling the HA interconnect, if necessary
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_cable_the_management_and_data_connections.html">
+        Cabling the management and data connections
+      </a></li></ul></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/install-fc/task_fcsw_configure_the_fc_switches_choice_topic.html">
+        <div class="na-navbar-padding"> Configuring the FC switches</div>
+      </a>
+      <ul><li class="subfolders "><a href="/us-en/ontap-metrocluster/install-fc/task_fcsw_brocade_configure_the_brocade_fc_switches_with_rcf_files.html">
+        <div class="na-navbar-padding"> Configuring Brocade FC switches with RCF files</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_reset_the_brocade_fc_switch_to_factory_defaults.html">
+        Resetting the Brocade FC switch to factory defaults
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_download_the_brocade_fc_rcf_switch_software.html">
+        Downloading the Brocade FC switch RCF file
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_install_the_brocade_fc_switch_rcf_file.html">
+        Installing the Brocade FC switch RCF file
+      </a></li></ul></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/install-fc/generaltask_fcsw_cisco_configure_the_cisco_fc_switches_with_rcf_files.html">
+        <div class="na-navbar-padding"> Configuring the Cisco FC switches with RCF files</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_reset_the_cisco_fc_switch_to_factory_defaults.html">
+        Resetting the Cisco FC switch to factory defaults
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_download_and_install_the_cisco_fc_switch_software.html">
+        Downloading and installing the Cisco FC switch NX-OS software
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_download_and_install_the_cisco_fc_switch_rcf_files.html">
+        Downloading and installing the Cisco FC RCF files
+      </a></li></ul></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_fcsw_brocade_configure_the_brocade_fc_switches_supertask.html">
+        Configuring the Brocade FC switches manually
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_fcsw_cisco_configure_a_cisco_switch_supertask.html">
+        Configuring the Cisco FC switches nanually
+      </a></li></ul></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_fb_new_install.html">
+        Installing FC-to-SAS bridges and SAS disk shelves
+      </a></li></ul></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/install-fc/task_fmc_mcc_transition_configure_the_mcc_hardware_for_share_a_7_mode_brocade_6510_fc_fabric_dure_transition.html">
+        <div class="na-navbar-padding"> Configuring hardware for sharing a Brocade 6510 FC fabric during transition</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/concept_fcsw_brocade_reviewing_brocade_license_requirements.html">
+        Reviewing Brocade license requirements
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_rack_the_hardware_components_mcc_fabric_and_ip.html">
+        Racking the hardware components
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_fmc_mcc_transition_cable_the_new_mcc_controllers_to_the_exist_fc_fabrics.html">
+        Cabling the new MetroCluster controllers to the existing FC fabrics
+      </a></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/install-fc/task_fmc_mcc_transition_configure_a_switch_fabric_for_shar_with_the_7_mode_and_clustered_mcc_configuration.html">
+        <div class="na-navbar-padding"> Configuring switch fabrics sharing between the 7-Mode and clustered MetroCluster configuration</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_fmc_mcc_transition_disable_one_of_the_switch_fabrics.html">
+        Disabling one of the switch fabrics
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_fmc_mcc_transition_configure_zone_and_qos.html">
+        Deleting TI zoning and configuring IOD settings
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_fmc_mcc_transition_ensure_isls_are_in_the_same_port_group_and_configure_zon.html">
+        Ensuring ISLs are in the same port group and configuring zoning
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_fmc_mcc_transition_reenable_the_switch_fabric_and_verify_operation.html">
+        Reenabling the switch fabric and verify operation
+      </a></li></ul></li></ul></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/concept_configure_the_mcc_software_in_ontap.html">
+        Configuring the MetroCluster software in ONTAP
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/concept_considerations_for_using_virtual_ip_and_border_gateway_protocol_with_a_mcc_configuration.html">
+        Considerations for using virtual IP and Border Gateway Protocol with a MetroCluster configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_test_the_mcc_configuration.html">
+        Testing the MetroCluster configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/concept_considerations_when_removing_mcc_configurations.html">
+        Considerations when removing MetroCluster configurations
+      </a></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/install-fc/concept_planning_and_installing_a_mcc_configuration_with_array_luns.html">
+        <div class="na-navbar-padding"> Planning and installing a MetroCluster configuration with array LUNs</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/concept_planning_for_a_mcc_configuration_with_array_luns.html">
+        Planning for a MetroCluster configuration with array LUNs
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/reference_supported_mcc_configuration_with_array_luns.html">
+        Supported MetroCluster configuration with array LUNs
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/reference_requirements_for_a_mcc_configuration_with_array_luns_reference.html">
+        Requirements for a MetroCluster configuration with array LUNs
+      </a></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/install-fc/task_install_and_cable_the_mcc_components_in_a_configuration_with_array_luns.html">
+        <div class="na-navbar-padding"> Installing and cabling the MetroCluster components in a configuration with array LUNs</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_rack_the_hardware_components_in_a_mcc_configuration_with_array_luns.html">
+        Racking the hardware components in a MetroCluster configuration with array LUNs
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_prepare_a_storage_array_for_use_with_ontap_systems.html">
+        Preparing a storage array for use with ONTAP systems
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/concept_switch_ports_required_for_a_eight_node_mcc_configuration_with_array_luns.html">
+        Switch ports required for a MetroCluster configuration with array LUNs
+      </a></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/install-fc/task_cable_the_fc_vi_and_hba_ports_in_a_mcc_configuration_with_array_luns.html">
+        <div class="na-navbar-padding"> Cabling the FC-VI and HBA ports in a MetroCluster configuration with array LUNs</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_cable_the_fc_vi_and_hba_ports_to_switches_in_a_two_node_fabric_attached_mcc_configuration_with_array_luns.html">
+        Cabling the FC-VI and HBA ports in a two-node fabric-attached MetroCluster configuration with array LUNs
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_cable_the_fc_vi_and_hba_ports_to_switches_in_a_four_node_fabric_attached_mcc_configuration_with_array_luns.html">
+        Cabling the FC-VI and HBA ports in a four-node fabric-attached MetroCluster configuration with array LUNs
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_cable_the_fc_vi_and_hba_ports_to_switches_in_an_eight_node_fabric_attached_mcc_configuration_with_array_luns.html">
+        Cabling the FC-VI and HBA ports in an eight-node fabric-attached MetroCluster configuration with array LUNs
+      </a></li></ul></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_cable_the_isls_in_a_mcc_configuration_with_array_luns.html">
+        Cabling the ISLs in a MetroCluster configuration with array LUNs
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_cable_the_cluster_interconnect_in_four_node_configurations.html">
+        Cabling the cluster interconnect in eight- or four-node configurations
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_cable_the_cluster_peering_connections.html">
+        Cabling the cluster peering connections
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_cable_the_ha_interconnect.html">
+        Cabling the HA interconnect, if necessary
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_cable_the_management_and_data_connections.html">
+        Cabling the management and data connections
+      </a></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/install-fc/task_cable_storage_arrays_to_fc_switches_in_a_mcc_configuration.html">
+        <div class="na-navbar-padding"> Cabling storage arrays to FC switches in a MetroCluster configuration</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/reference_example_of_cabling_array_luns_to_fc_switches_in_a_two_node_mcc_configuration.html">
+        Example of cabling storage array ports to FC switches in a two-node MetroCluster configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/reference_example_of_cabling_array_luns_to_fc_switches_in_a_four_node_mcc_configuration.html">
+        Example of cabling storage array ports to FC switches in a four-node MetroCluster configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/reference_example_of_cabling_array_luns_to_fc_switches_in_an_eight_node_mcc_configuration.html">
+        Example of cabling storage array ports to FC switches in an eight-node MetroCluster configuration
+      </a></li></ul></li></ul></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/install-fc/concept_switch_zoning_in_a_mcc_configuration_with_array_luns.html">
+        <div class="na-navbar-padding"> Switch zoning in a MetroCluster configuration with array LUNs</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/reference_requirements_for_switch_zoning_in_a_mcc_configuration_with_array_luns.html">
+        Requirements for switch zoning in a MetroCluster configuration with array LUNs
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/concept_example_of_switch_zoning_in_a_two_node_mcc_configuration_with_array_luns.html">
+        Example of switch zoning in a two-node MetroCluster configuration with array LUNs
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/concept_example_of_switch_zoning_in_a_four_node_mcc_configuration_with_array_luns.html">
+        Example of switch zoning in a four-node MetroCluster configuration with array LUNs
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/concept_example_of_switch_zoning_in_an_eight_node_mcc_configuration_with_array_luns.html">
+        Example of switch zoning in an eight-node MetroCluster configuration with array LUNs
+      </a></li></ul></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/install-fc/task_configure_ontap_in_a_mcc_configuration_with_array_luns.html">
+        <div class="na-navbar-padding"> Setting up ONTAP in a MetroCluster configuration with array LUNs</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_verify_the_ha_state_of_components_is_mcc_or_mcc_2n_in_maintenance_mode.html">
+        Verifying and configuring the HA state of components in Maintenance mode
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_configure_ontap_on_a_system_that_uses_only_array_luns.html">
+        Configuring ONTAP on a system that uses only array LUNs
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/concept_setting_up_the_cluster.html">
+        Setting up the cluster
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_install_the_license_for_us_array_luns_in_a_mcc_configuration.html">
+        Installing the license for using array LUNs in a MetroCluster configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_configure_fc_vi_ports_on_a_x1132a_r6_quad_port_card.html">
+        Configuring FC-VI ports on a X1132A-R6 quad-port card on FAS8020 systems
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_assign_ownership_of_array_luns.html">
+        Assigning ownership of array LUNs
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_peer_the_clusters_mcc_with_array_luns.html">
+        Peering the clusters
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_mirror_the_root_aggregates_mcc_with_array_luns.html">
+        Mirroring the root aggregates
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_create_data_aggregates_and_implement_the_configuration_mcc_with_array_luns.html">
+        Creating data aggregates on, implementing, and verifying the MetroCluster configuration
+      </a></li></ul></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/install-fc/concept_implementing_a_mcc_configuration_with_both_disks_and_array_luns.html">
+        <div class="na-navbar-padding"> Implementing a MetroCluster configuration with both disks and array LUNs</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/concept_considerations_for_implementing_a_mcc_configuration_with_disks_and_array_luns.html">
+        Considerations when implementing a MetroCluster configuration with disks and array LUNs
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/reference_example_of_a_two_node_fabric_attached_mcc_configuration_with_disks_and_array_luns.html">
+        Example of a two-node fabric-attached MetroCluster configuration with disks and array LUNs
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/concept_example_of_a_four_node_mcc_configuration_with_disks_and_array_luns.html">
+        Example of a four-node MetroCluster configuration with disks and array LUNs
+      </a></li></ul></li></ul></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/install-fc/concept_using_the_oncommand_management_tools_for_further_configuration_and_monitoring.html">
+        <div class="na-navbar-padding"> Using the Active IQ Unified Manager and ONTAP System Manager for further configuration and monitoring</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/task_synchronize_the_system_time_us_ntp.html">
+        Synchronizing the system time using NTP
+      </a></li></ul></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/concept_considerations_when_using_ontap_in_a_mcc_configuration.html">
+        Considerations when using ONTAP in a MetroCluster configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-fc/reference_where_to_find_additional_information_icg.html">
+        Where to find additional information
+      </a></li></ul></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/install-ip/index.html">
+        <div class="na-navbar-padding"> Install a MetroCluster IP configuration</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/concept_deciding_whether_to_use_this_guide_mcc_ip_installation_and_configuration_guide.html">
+        Deciding whether to use the MetroCluster IP Installation and Configuration Guide
+      </a></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/install-ip/concept_prepare_for_the_mcc_installation.html">
+        <div class="na-navbar-padding"> Preparing for the MetroCluster installation</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/concept_considerations_differences.html">
+        Differences among the ONTAP MetroCluster configurations
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/concept_considerations_mediator.html">
+        Deciding between ONTAP Mediator and MetroCluster Tiebreaker
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/concept_considerations_mcip.html">
+        Considerations for MetroCluster IP configurations
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/concept_considerations_drive_assignment.html">
+        Automatic drive assignment and ADP systems in ONTAP 9.4 and later
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/concept_considerations_peering.html">
+        Cluster peering
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/concept_considerations_isls.html">
+        ISL requirements
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/concept_considerations_layer_3.html">
+        Using layer 3 wide-area networks
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/concept_considerations_layer_2.html">
+        Sharing private layer 2 networks
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/concept_considerations_mc_compliant_switches.html">
+        Using MetroCluster-compliant switches
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/concept_considerations_tdm_encryption.html">
+        Using TDM/xWDM and encryption equipment with MetroCluster IP configurations
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/concept_considerations_unmirrored_aggrs.html">
+        Unmirrored aggregates in a MetroCluster IP configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/concept_considerations_firewalls.html">
+        Firewall usage at MetroCluster sites
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/concept_considerations_for_using_virtual_ip_and_border_gateway_protocol_with_a_mcc_configuration.html">
+        Considerations for using virtual IP and Border Gateway Protocol with a MetroCluster configuration
+      </a></li></ul></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/install-ip/task_configure_the_mcc_hardware_components_mcc_ip.html">
+        <div class="na-navbar-padding"> Configuring the MetroCluster hardware components</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/concept_parts_of_an_ip_mcc_configuration_mcc_ip.html">
+        Parts of a MetroCluster IP configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/concept_required_mcc_ip_components_and_naming_guidelines_mcc_ip.html">
+        Required MetroCluster IP components and naming conventions
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/task_rack_hw_components.html">
+        Rack the hardware components
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/task_cable_ip_switches.html">
+        Cable the MetroCluster IP switches
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/task_cable_other_connections.html">
+        Cable the controller data and management ports
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/task_install_and_cable_the_mcc_components.html">
+        Configure the MetroCluster IP switches
+      </a></li></ul></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/concept_configure_the_mcc_software_in_ontap.html">
+        Configuring the MetroCluster software in ONTAP
+      </a></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/install-ip/concept_configure_the_ontap_mediator_for_unplanned_automatic_switchover.html">
+        <div class="na-navbar-padding"> Configuring the ONTAP Mediator service for unplanned automatic switchover</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/concept_mediator_requirements.html">
+        Preparing to install the ONTAP Mediator service
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/task_install_configure_mediator.html">
+        Installing or upgrading the ONTAP Mediator service
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/task_configuring_the_ontap_mediator_service_from_a_metrocluster_ip_configuration.html">
+        Configuring the ONTAP Mediator service from a MetroCluster IP configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/task_connecting_mcc_to_different_mediator_instance.html">
+        Connecting a MetroCluster configuration to a different ONTAP Mediator instance
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/task_changing_mediator_password.html">
+        Changing the ONTAP Mediator password
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/task_changing_mediator_username.html">
+        Changing the ONTAP Mediator user name
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/task_uninstall_mediator.html">
+        Uninstalling the ONTAP Mediator service
+      </a></li></ul></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/task_test_the_mcc_configuration.html">
+        Testing the MetroCluster configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/concept_considerations_when_removing_mcc_configurations.html">
+        Considerations when removing MetroCluster configurations
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/concept_considerations_when_using_ontap_in_a_mcc_configuration.html">
+        Considerations when using ONTAP in a MetroCluster configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-ip/reference_where_to_find_additional_information_mccip_icg.html">
+        Where to find additional information
+      </a></li></ul></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/install-stretch/index.html">
+        <div class="na-navbar-padding"> Install a stretch MetroCluster configuration</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-stretch/concept_deciding_whether_to_use_this_guide_stretch_mcc_installation_and_configuration_guide.html">
+        Deciding whether to use the Stretch MetroCluster Installation and Configuration Guide
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-stretch/concept_preparing_for_the_mcc_installation.html">
+        Preparing for the MetroCluster installation
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-stretch/concept_choosing_the_correct_installation_procedure_for_your_configuration_mcc_install.html">
+        Choosing the correct installation procedure for your configuration
+      </a></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/install-stretch/task_configure_the_mcc_hardware_components_2_node_stretch_sas.html">
+        <div class="na-navbar-padding"> Cabling a two-node SAS-attached stretch MetroCluster configuration</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-stretch/concept_parts_of_a_two_node_sas_attached_stretch_mcc_configuration.html">
+        Parts of a two-node SAS-attached stretch MetroCluster configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-stretch/concept_required_mcc_components_and_example_names_for_two_node_sas_attached_stretch_configurations_mcc.html">
+        Required MetroCluster hardware components and naming guidelines for two-node SAS-attached stretch configurations
+      </a></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/install-stretch/reference_sas_optical_mc_configuring_a_stretch_mcc_system_with_sas_disk_shelves_and_sas_optical_cables.html">
+        <div class="na-navbar-padding"> Installing and cabling MetroCluster components for two-node SAS-attached stretch configurations</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-stretch/task_rack_the_hardware_components_2_node_stretch_sas.html">
+        Racking the hardware components
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-stretch/task_cable_the_controllers_to_each_other_and_the_storage_shelves.html">
+        Cabling the controllers to each other and the storage shelves
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-stretch/task_cable_the_cluster_peering_connections.html">
+        Cabling the cluster peering connections
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-stretch/task_cable_the_management_and_data_connections.html">
+        Cabling the management and data connections
+      </a></li></ul></li></ul></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/install-stretch/task_configure_the_mcc_hardware_components_2_node_stretch_atto.html">
+        <div class="na-navbar-padding"> Cabling a two-node bridge-attached stretch MetroCluster configuration</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-stretch/concept_parts_of_a_two_node_mcc_configuration_using_fc_to_sas_bridges.html">
+        Parts of a two-node bridge-attached stretch MetroCluster configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-stretch/concept_required_mcc_components_and_naming_conventions_for_two_node_bridge_attached_stretch_configurations_mcc.html">
+        Required MetroCluster hardware components and naming conventions for two-node bridge-attached stretch configurations
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-stretch/reference_information_gathering_worksheet_for_fc_to_sas_bridges_2_node_atto.html">
+        Information gathering worksheet for FC-to-SAS bridges
+      </a></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/install-stretch/task_install_and_cable_the_mcc_components.html">
+        <div class="na-navbar-padding"> Installing and cabling MetroCluster components</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-stretch/task_rack_the_hardware_components_mcc_2_node_stretch_atto.html">
+        Racking the hardware components
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-stretch/task_cable_the_fc_vi_adapters_to_the_partner_controller_2_node_stretch_atto.html">
+        Cabling the controllers to each other
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-stretch/task_cable_the_cluster_peering_connections.html">
+        Cabling the cluster peering connections
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-stretch/task_cable_the_management_and_data_connections.html">
+        Cabling the management and data connections
+      </a></li></ul></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-stretch/task_fb_new_install.html">
+        Installing FC-to-SAS bridges and SAS disk shelves
+      </a></li></ul></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-stretch/concept_configuring_the_mcc_software_in_ontap.html">
+        Configuring the MetroCluster software in ONTAP
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-stretch/concept_considerations_for_using_virtual_ip_and_border_gateway_protocol_with_a_mcc_configuration.html">
+        Considerations for using virtual IP and Border Gateway Protocol with a MetroCluster configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-stretch/task_test_the_mcc_configuration.html">
+        Testing the MetroCluster configuration
+      </a></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/install-stretch/concept_stretch_mcc_configuration_with_array_luns.html">
+        <div class="na-navbar-padding"> Connections in a stretch MetroCluster configurations with array LUNs</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-stretch/reference_example_of_a_stretch_mcc_configuration_with_array_luns.html">
+        Example of a stretch MetroCluster configuration with array LUNs
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-stretch/reference_examples_of_two_node_stretch_mcc_configurations_with_disks_and_array_luns.html">
+        Examples of two-node stretch MetroCluster configurations with disks and array LUNs
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-stretch/reference_example_of_a_stretch_mcc_configuration_with_e_series_storage_arrays.html">
+        Example of a stretch MetroCluster configuration with E-Series storage arrays
+      </a></li></ul></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-stretch/concept_considerations_when_removing_mcc_configurations.html">
+        Considerations when removing MetroCluster configurations
+      </a></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/install-stretch/concept_using_the_oncommand_management_tools_for_further_configuration_and_monitoring.html">
+        <div class="na-navbar-padding"> Using the Active IQ Unified Manager and ONTAP System Manager for further configuration and monitoring</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-stretch/task_synchronize_the_system_time_us_ntp.html">
+        Synchronizing the system time using NTP
+      </a></li></ul></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-stretch/concept_considerations_when_using_ontap_in_a_mcc_configuration.html">
+        Considerations when using ONTAP in a MetroCluster configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-stretch/task_upgrade_the_configuration_to_fabric_attached_mcc.html">
+        Transitioning from a stretch to a fabric-attached MetroCluster configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/install-stretch/reference_where_to_find_additional_information_icg.html">
+        Where to find additional information
+      </a></li></ul></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/maintain/index.html">
+        <div class="na-navbar-padding"> Maintain the MetroCluster components</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/concept_deciding_whether_to_use_this_guide_mcc_service_guide.html">
+        Deciding whether to use the MetroCluster Maintenance Guide
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/concept_where_to_find_procedures_for_mcc_maintenance_tasks.html">
+        Where to find procedures for MetroCluster maintenance tasks
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/reference_mcc_failure_scenarios.html">
+        MetroCluster failure and recovery scenarios
+      </a></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/maintain/concept_performing_fc_to_sas_bridge_maintenance.html">
+        <div class="na-navbar-padding"> Performing FC-to-SAS bridge maintenance</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/concept_using_fibrebridge_7600n_bridges_in_mcc_configurations.html">
+        Support for FibreBridge 7600N bridges in MetroCluster configurations
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/concept_using_fibrebridge_7500n_bridges_in_mcc_configurations.html">
+        Support for FibreBridge 7500N bridges in MetroCluster configurations
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_enable_ip_port_access_on_the_fibrebridge_7600n_bridge_guides.html">
+        Enabling IP port access on the FibreBridge 7600N bridge if necessary
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_update_firmware_on_a_fibrebridge_bridge_parent_topic.html">
+        Updating firmware on a FibreBridge bridge
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_replace_a_sle_fc_to_sas_bridge.html">
+        Replacing a single FC-to-SAS bridge
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_fb_consolidate_replace_a_pair_of_fibrebridge_6500n_bridges_with_7500n_bridges.html">
+        Replacing a pair of FibreBridge 6500N bridges with 7600N or 7500N bridges
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/reference_requirements_for_using_other_interfaces_to_configure_and_manage_fibrebridge_bridges.html">
+        Requirements for using other interfaces to configure and manage FibreBridge bridges
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/reference_fb_replace_a_power_supply.html">
+        Hot-replacing a failed power supply module
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/concept_in_band_management_of_the_fc_to_sas_bridges.html">
+        In-band management of the FC-to-SAS bridges
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_secur_or_unsecur_a_fibrebridge_bridge.html">
+        Securing or unsecuring the FibreBridge bridge
+      </a></li></ul></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/maintain/concept_performing_fc_switch_maintenance.html">
+        <div class="na-navbar-padding"> Performing FC switch maintenance and replacement</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_upgrade_or_downgrad_the_firmware_on_a_brocade_fc_switch_mcc.html">
+        Upgrading or downgrading the firmware on a Brocade FC switch
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_upgrade_or_downgrad_the_firmware_on_a_cisco_fc_switch_mcc.html">
+        Upgrading or downgrading the firmware on a Cisco FC switch
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_upgrade_to_new_brocade_switches.html">
+        Upgrading to new Brocade FC switches
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_replace_a_brocade_fc_switch_mcc.html">
+        Replacing a Brocade FC switch
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_rename_a_brocade_fc_switch.html">
+        Renaming a Brocade FC switch
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_disable_encryption_on_brocade_fc_switches.html">
+        Disabling encryption on Brocade FC switches
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_change_isl_properties_isl_ports_or_the_iod_ood_configuration_on_a_brocade_switch.html">
+        Changing ISL properties, ISL ports, or the IOD/OOD configuration on a Brocade switch
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_replace_a_cisco_fc_switch_mcc.html">
+        Replacing a Cisco FC switch
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_change_speed_of_isl_ports_on_a_cisco_fc_switch.html">
+        Changing speed of ISL ports on a Cisco FC switch
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_add_lsls_to_a_cisco_fc_switch.html">
+        Adding lSLs to a Cisco switch
+      </a></li></ul></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/maintain/concept_performing_ip_switch_maintenance.html">
+        <div class="na-navbar-padding"> Performing IP switch maintenance and replacement</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_replace_an_ip_switch.html">
+        Replacing an IP switch
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_upgrade_firmware_on_mcc_ip_switches.html">
+        Upgrading firmware on MetroCluster IP switches
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_upgrade_rcf_files_on_mcc_ip_switches.html">
+        Upgrading RCF files on MetroCluster IP switches
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_rename_a_cisco_ip_switch.html">
+        Renaming a Cisco IP switch
+      </a></li></ul></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_add_remove_or_change_isl_ports_nondisruptively.html">
+        Adding, removing, or changing ISL ports nondisruptively
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/concept_identifying_storage_in_a_mcc_ip_configuration.html">
+        Identifying storage in a MetroCluster IP configuration
+      </a></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/maintain/task_hot_add_storage_to_a_mcc_fc_configuration_container_topic.html">
+        <div class="na-navbar-padding"> Hot-adding storage to a MetroCluster FC configuration</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_hot_add_a_sas_disk_shelf_in_a_direct_attached_mcc_configuration_us_sas_optical_cables.html">
+        Hot-adding a SAS disk shelf in a direct-attached MetroCluster FC configuration using SAS optical cables
+      </a></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/maintain/concept_atto_mc_hot_adding_storage_shelves_to_a_bridge_attached_mcc_configuration.html">
+        <div class="na-navbar-padding"> Hot-adding SAS storage to a bridge-attached MetroCluster FC configuration</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_hot_add_a_stack_to_exist_7500n_pair.html">
+        Hot-adding a stack of SAS disk shelves to an existing pair of FibreBridge 7500N bridges
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_fb_hot_add_stack_of_shelves_and_bridges.html">
+        Hot-adding a stack of SAS disk shelves and bridges to a MetroCluster system
+      </a></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/maintain/task_fb_hot_add_shelf.html">
+        <div class="na-navbar-padding"> Hot-adding a SAS disk shelf to a stack of SAS disk shelves</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_fb_hot_add_shelf_prepare_7500n.html">
+        Preparing to hot-add SAS disk shelves
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_fb_hot_add_a_disk_shelf_install_7500n.html">
+        Hot-adding a disk shelf
+      </a></li></ul></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_hot_add_an_iom12_disk_shelf_to_a_stack_of_iom6_disk_shelves.html">
+        Hot-adding an IOM12 disk shelf to a stack of IOM6 disk shelves in a bridge-attached MetroCluster configuration
+      </a></li></ul></li></ul></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_hot_remove_storage_from_a_mcc_fc_configuration.html">
+        Hot-removing storage from a MetroCluster FC configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_replace_a_shelf_nondisruptively_in_a_stretch_mcc_configuration.html">
+        Replacing a shelf nondisruptively in a stretch MetroCluster configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_replace_a_shelf_nondisruptively_in_a_mcc_fc_configuration.html">
+        Replacing a shelf nondisruptively in a fabric-attached MetroCluster configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/concept_migrating_root_volumes_to_a_new_destination.html">
+        When to migrate root volumes to a new destination
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_move_a_metadata_volume_in_mcc_configurations.html">
+        Moving a metadata volume in MetroCluster configurations
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_rename_the_cluster_for_mcc_configuration.html">
+        Renaming a cluster in MetroCluster configurations
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_power_on_and_power_off_a_data_center.html">
+        Powering off and powering on a data center
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_power_off_an_entire_mcc_ip_configuration.html">
+        Powering off an entire MetroCluster IP configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_power_off_an_entire_mcc_fc_configuration.html">
+        Powering off an entire MetroCluster FC configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/task_do_not_use_for_9_8_and_later_reconfigure_the_fc_switch_layout_for_ontap_9_1_or_later.html">
+        Reconfiguring an FC switch layout configured before ONTAP 9.x
+      </a></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/maintain/concept_port_assignments_for_fc_switches_parent_topic.html">
+        <div class="na-navbar-padding"> Port assignments for FC switches</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/concept_port_assignments_for_systems_using_two_initiator_ports.html">
+        Port assignments for systems using two initiator ports
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/concept_port_assignments_for_fc_switches_when_using_ontap_9_0.html">
+        Port assignments for FC switches when using ONTAP 9.0
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/concept_port_assignments_for_fc_switches_when_using_ontap_9_1_and_later.html">
+        Port assignments for FC switches when using ONTAP 9.1 and later
+      </a></li></ul></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/concept_using_the_interoperability_matrix_tool_to_find_mcc_information.html">
+        Using the Interoperability Matrix Tool to find MetroCluster information
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/maintain/reference_where_to_find_additional_information_mcc_service_guide.html">
+        Where to find additional information
+      </a></li></ul></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/manage/concept_understanding_mcc_data_protection_and_disaster_recovery.html">
+        Understanding MetroCluster data protection and disaster recovery
+      </a></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/manage/index.html">
+        <div class="na-navbar-padding"> Performing switchover, healing, and switchback</div>
+      </a>
+      <ul><li class="subfolders "><a href="/us-en/ontap-metrocluster/manage/task_perform_switchover_for_tests_or_maintenance.html">
+        <div class="na-navbar-padding"> Performing switchover for tests or maintenance</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/manage/task_verifiy_that_your_system_is_ready_for_a_switchover.html">
+        Verifying that your system is ready for a switchover
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/manage/task_send_a_custom_autosupport_message_prior_to_negotiated_switchover.html">
+        Sending a custom AutoSupport message prior to negotiated switchover
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/manage/task_perform_a_negotiated_switchover.html">
+        Performing a negotiated switchover
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/manage/concept_output_for_storage_aggregate_plex_show_after_a_mcc_switchover.html">
+        Output for the storage aggregate plex show command is indeterminate after a MetroCluster switchover
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/manage/task_confirm_that_dr_partners_have_come_online.html">
+        Confirming that the DR partners have come online
+      </a></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/manage/task_heal_the_configuration_choice_task.html">
+        <div class="na-navbar-padding"> Healing the configuration</div>
+      </a>
+      <ul><li class="subfolders "><a href="/us-en/ontap-metrocluster/manage/task_heal_the_configuration_in_a_mcc_fc_configuration_supertask.html">
+        <div class="na-navbar-padding"> Healing the configuration in a MetroCluster FC configuration</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/manage/task_heal_the_data_aggregates_after_negotiated_switchover.html">
+        Healing the data aggregates after negotiated switchover
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/manage/task_heal_the_root_aggregates_after_negotiated_switchover.html">
+        Healing the root aggregates after negotiated switchover
+      </a></li></ul></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/manage/task_heal_the_configuration_in_a_mcc_ip_configuration_ontap_9_4_and_earlier.html">
+        Healing the configuration in a MetroCluster IP configuration (ONTAP 9.4 and earlier)
+      </a></li></ul></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/manage/task_perform_a_switchback.html">
+        Performing a switchback
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/manage/task_verify_a_successful_switchback.html">
+        Verifying a successful switchback
+      </a></li></ul></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/manage/reference_commands_for_switchover_healing_and_switchback.html">
+        Commands for switchover, healing, and switchback
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/manage/concept_monitoring_the_mcc_configuration.html">
+        Monitoring the MetroCluster configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/manage/concept_monitoring_and_protecting_database_validity_by_using_nvfail.html">
+        Monitoring and protecting the file system consistency using NVFAIL
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/manage/reference_where_to_find_additional_information_dr_guide.html">
+        Where to find additional information
+      </a></li></ul></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/tiebreaker/index.html">
+        <div class="na-navbar-padding"> Install and Configure MetroCluster Tiebreaker</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/tiebreaker/concept_deciding_whether_to_use_this_guide_mcc_tiebreaker_installation_and_configuration_guide.html">
+        Deciding whether to use the MetroCluster Tiebreaker Software Installation and Configuration Guide
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/tiebreaker/concept_overview_of_the_tiebreaker_software.html">
+        Overview of the Tiebreaker software
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/tiebreaker/task_install_the_tiebreaker_software.html">
+        Installing the Tiebreaker software
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/tiebreaker/concept_configuring_the_tiebreaker_software.html">
+        Configuring the Tiebreaker software
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/tiebreaker/task_configure_snmp_setts_for_tiebreaker_software.html">
+        Configuring SNMP settings for Tiebreaker software
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/tiebreaker/concept_monitoring_the_mcc_configuration.html">
+        Monitoring the MetroCluster configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/tiebreaker/concept_risks_and_limitation_of_using_mcc_tiebreaker_in_active_mode.html">
+        Risks and limitations of using MetroCluster Tiebreaker in active mode
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/tiebreaker/reference_firewall_requirements_for_mcc_tiebreaker.html">
+        Firewall requirements for MetroCluster Tiebreaker
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/tiebreaker/reference_where_to_find_additional_information_tb_icg.html">
+        Where to find additional information
+      </a></li></ul></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/transition/index.html">
+        <div class="na-navbar-padding"> Transition from MetroCluster FC to MetroCluster IP</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/transition/concept_supported_platforms_for_transition.html">
+        Supported platforms for nondisruptive transition
+      </a></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/transition/concept_nondisruptively_transitioning_from_a_four_node_mcc_fc_to_a_mcc_ip_configuration.html">
+        <div class="na-navbar-padding"> Transitioning nondisruptively from a MetroCluster FC to a MetroCluster IP configuration (ONTAP 9.8 and later)</div>
+      </a>
+      <ul><li class="subfolders "><a href="/us-en/ontap-metrocluster/transition/concept_preparing_for_transitioning_from_mcc_fc_to_an_mcc_ip_configuration.html">
+        <div class="na-navbar-padding"> Preparing for transition from a MetroCluster FC to a MetroCluster IP configuration</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/transition/concept_requirements_for_fc_to_ip_transition_mcc.html">
+        Requirements for nondisruptive FC-to-IP transition
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/transition/concept_how_transition_impacts_the_mcc_hardware_components.html">
+        How transition impacts the MetroCluster hardware components
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/transition/concept_transition_workflow_fc_to_ip_transition.html">
+        Workflow for nondisruptive MetroCluster transition
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/transition/concept_considerations_for_using_existing_ip_switches.html">
+        Considerations for IP switches
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/transition/concept_switchover_and_switchback_operations_during_transition.html">
+        Switchover, healing, and switchback operations during nondisruptive transition
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/transition/concept_mcc_operation_during_transition.html">
+        Alert messages and tool support during transition
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/transition/concept_example_naming_in_this_procedure_mcc_ip_transition.html">
+        Example naming in this procedure
+      </a></li></ul></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/transition/task_transition_from_mcc_fc_to_mcc_ip_configurations.html">
+        Transitioning from MetroCluster FC to MetroCluster IP configurations
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/transition/task_send_a_custom_autosupport_message_after_maintenance_4n_nondisruptive_mcc_transition.html">
+        Sending a custom AutoSupport message after maintenance
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/transition/task_restore_tiebreaker_monitor_4n_nondisruptive_mcc_transition.html">
+        Restoring Tiebreaker or Mediator monitoring
+      </a></li></ul></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/transition/task_disruptively_transition_from_a_two_node_mcc_fc_to_a_four_node_mcc_ip_configuration.html">
+        <div class="na-navbar-padding"> Disruptively transitioning from a two-node MetroCluster FC to a four-node MetroCluster IP configuration (ONTAP 9.8 and later)</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/transition/concept_example_naming_in_this_procedure_2n_mcc_transition_disruptive.html">
+        Example naming in this procedure
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/transition/concept_requirements_for_fc_to_ip_transition_2n_mcc_transition.html">
+        Preparing for disruptive FC-to-IP transition
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/transition/task_transition_the_mcc_fc_nodes_2n_mcc_transition_supertask.html">
+        Transitioning the MetroCluster FC nodes
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/transition/task_connect_the_mcc_ip_controller_modules_2n_mcc_transition_supertask.html">
+        Connecting the MetroCluster IP controller modules
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/transition/task_configure_the_new_nodes_and_complete_transition.html">
+        Configuring the new nodes and completing transition
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/transition/task_return_the_system_to_normal_operation_2n_mcc_transition_supertask.html">
+        Returning the system to normal operation
+      </a></li></ul></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/transition/task_disruptively_transition_while_move_volumes_from_old_shelves_to_new_shelves.html">
+        Disruptively transitioning from MetroCluster FC to MetroCluster IP when retiring storage shelves (ONTAP 9.8 and later)
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/transition/task_disruptively_transition_when_exist_shelves_are_not_supported_on_new_controllers.html">
+        Disruptively transitioning when existing shelves are not supported on new controllers (ONTAP 9.8 and later)
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/transition/task_move_an_fc_san_workload_from_mcc_fc_to_mcc_ip_nodes.html">
+        Moving an FC SAN workload from MetroCluster FC to MetroCluster IP nodes
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/transition/task_move_linux_iscsi_hosts_from_mcc_fc_to_mcc_ip_nodes.html">
+        Moving Linux iSCSI hosts from MetroCluster FC to MetroCluster IP nodes
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/transition/reference_where_to_find_additional_information_mcc_ug.html">
+        Where to find additional information
+      </a></li></ul></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/upgrade/index.html">
+        <div class="na-navbar-padding"> Upgrade or expand the MetroCluster configuration</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/concept_choosing_an_upgrade_method_mcc.html">
+        Choosing an upgrade or refresh method
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_upgrade_controllers_in_a_four_node_fc_mcc_us_switchover_and_switchback_mcc_fc_4n_cu.html">
+        Upgrading controllers in a MetroCluster FC configuration using switchover and switchback
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_upgrade_controllers_in_a_four_node_ip_mcc_us_switchover_and_switchback_mcc_ip.html">
+        Upgrading controllers in a MetroCluster IP configuration using switchover and switchback (ONTAP 9.8 and later)
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_refresh_4n_mcc_fc.html">
+        Refreshing a four-node MetroCluster FC configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_refresh_4n_mcc_ip.html">
+        Refreshing a four-node MetroCluster IP configuration (ONTAP 9.8 and later)
+      </a></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/upgrade/task_expand_a_two_node_mcc_fc_configuration_to_a_four_node_fc_configuration_supertask.html">
+        <div class="na-navbar-padding"> Expanding a two-node MetroCluster FC configuration to a four-node configuration</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_verify_the_state_of_the_mcc_configuration_mcc_expansion.html">
+        Verifying the state of the MetroCluster configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_send_a_custom_autosupport_message_before_add_nodes_to_the_mcc_configuration_2_node_to_4_node.html">
+        Sending a custom AutoSupport message before adding nodes to the MetroCluster configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_zone_for_the_new_controller_ports_in_a_fabric_attached_mcc_configuration_four_node_expansion.html">
+        Zoning for the new controller ports when adding a controller module in a fabric-attached MetroCluster configuration
+      </a></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/upgrade/task_add_a_new_controller_to_each_cluster_mcc_expansion.html">
+        <div class="na-navbar-padding"> Adding a new controller module to each cluster</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_prepare_for_the_upgrade_add_2nd_controller_to_create_ha_pair.html">
+        Preparing for the upgrade
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_clear_the_configuration_on_a_controller_module_mcc.html">
+        Clearing the configuration on a controller module
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_prepare_cluster_ports_on_the_exist_controller.html">
+        Preparing cluster ports on an existing controller module
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_prepare_the_netboot_server_cluster_mode.html">
+        Preparing the netboot server to download the image
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_enable_the_ha_mode_on_the_exist_controller_mcc_when_add_a_2nd_controller.html">
+        Setting the HA mode on the existing controller module
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_shut_down_the_exist_controller_when_add_a_2nd_controller_in_c_mode.html">
+        Shutting down the existing controller module
+      </a></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/upgrade/task_install_and_cable_the_new_controller.html">
+        <div class="na-navbar-padding"> Installing and cabling the new controller module</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_cable_the_controller_module_s_fc_vi_hba_ports_to_the_fc_switches_controller_to_fc_sw.html">
+        Cabling the new controller module&#8217;s FC-VI and HBA ports to the FC switches
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_cable_the_cluster_peering_connections.html">
+        Cabling the new controller module&#8217;s cluster peering connections
+      </a></li></ul></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_power_up_both_controller_modules_and_display_the_loader_prompt_2_node_mcc_expansion.html">
+        Powering up both controller modules and displaying the LOADER prompt
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_change_the_ha_config_setts_mcc_add_a_2nd_controller.html">
+        Changing the ha-config setting on the existing and new controller modules
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_set_the_partner_system_id_for_both_controller_modules.html">
+        Setting the partner system ID for both controller modules
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_boot_the_exist_controller_module.html">
+        Booting the existing controller module
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_assign_disks_to_the_new_controller_mcc_expansion.html">
+        Assigning disks to the new controller module
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_netboot_and_set_up_ontap_on_the_new_controller_module_mcc.html">
+        Netbooting and setting up ONTAP on the new controller module
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_mirror_the_root_aggregates_mcc_expansion_procedure.html">
+        Mirroring the root aggregate on the new controller
+      </a></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/upgrade/task_configure_intercluster_lifs.html">
+        <div class="na-navbar-padding"> Configuring intercluster LIFs</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_configure_intercluster_lifs_to_use_dedicated_intercluster_ports.html">
+        Configuring intercluster LIFs on dedicated ports
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_configure_intercluster_lifs_to_share_data_ports.html">
+        Configuring intercluster LIFs on shared data ports
+      </a></li></ul></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_create_a_mirrored_data_aggregate_on_each_node_mcc.html">
+        Creating a mirrored data aggregate on each node
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_install_licenses_on_the_new_controller_module_cluster_mode.html">
+        Installing licenses for the new controller module
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_create_unmirrored_data_aggregates_mcc.html">
+        Creating unmirrored data aggregates
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_install_firmware_after_add_a_controller_module.html">
+        Installing the firmware after adding a controller module
+      </a></li></ul></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_refresh_the_mcc_configuration_mcc_configure_refresh.html">
+        Refreshing the MetroCluster configuration with new controllers
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_enable_storage_failover_both_controller_modules_and_set_cluster_ha.html">
+        Enabling storage failover on both controller modules and enabling cluster HA
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_restart_the_svms.html">
+        Restarting the SVMs
+      </a></li></ul></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/upgrade/task_expand_a_four_node_mcc_fc_configuration_to_an_eight_node_configuration.html">
+        <div class="na-navbar-padding"> Expanding a four-node MetroCluster FC configuration to an eight-node configuration</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_determin_the_new_cable_layout_mcc_expansion.html">
+        Determining the new cabling layout
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_rack_the_new_equipment_mcc_expansion.html">
+        Racking the new equipment
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_verify_the_health_of_the_mcc_configuration.html">
+        Verifying the health of the MetroCluster configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_check_for_mcc_configuration_errors_with_config_advisor.html">
+        Checking for MetroCluster configuration errors with Config Advisor
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_send_a_custom_autosupport_message_before_add_nodes_to_the_mcc_configuration.html">
+        Sending a custom AutoSupport message prior to adding nodes to the MetroCluster configuration
+      </a></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/upgrade/task_recable_and_zone_a_switch_fabric_mcc_expansion.html">
+        <div class="na-navbar-padding"> Recabling and zoning a switch fabric for the new nodes</div>
+      </a>
+      <ul><li class="  active "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_disconnect_the_exist_dr_group_mcc_expansion.html">
+        Disconnecting the existing DR group from the fabric
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_apply_the_rcf_files_and_recable_the_switches.html">
+        Applying the RCF files and recabling the switches
+      </a></li></ul></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/upgrade/task_configure_ontap_on_the_new_controllers_mcc_expansion.html">
+        <div class="na-navbar-padding"> Configuring ONTAP on the new controllers</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_clear_the_configuration_on_a_controller_module_mcc.html">
+        Clearing the configuration on a controller module
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_assign_disk_ownership_in_aff_systems_mcc.html">
+        Assigning disk ownership in AFF systems
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_assign_disk_ownership_to_non_aff_systems_mcc.html">
+        Assigning disk ownership in non-AFF systems
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_verify_that_the_ha_state_of_components_is_mcc_dr_smok_crater_or_mcc_expansion.html">
+        Verifying the ha-config state of components
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_boot_the_new_controllers_and_join_them_to_the_cluster.html">
+        Booting the new controllers and joining them to the cluster
+      </a></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/upgrade/task_configure_the_clusters_into_a_mcc_configuration.html">
+        <div class="na-navbar-padding"> Configuring the clusters into a MetroCluster configuration</div>
+      </a>
+      <ul><li class="subfolders "><a href="/us-en/ontap-metrocluster/upgrade/task_configure_intercluster_lifs.html">
+        <div class="na-navbar-padding"> Configuring intercluster LIFs</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_configure_intercluster_lifs_to_use_dedicated_intercluster_ports.html">
+        Configuring intercluster LIFs on dedicated ports
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_configure_intercluster_lifs_to_share_data_ports.html">
+        Configuring intercluster LIFs on shared data ports
+      </a></li></ul></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_mirror_the_root_aggregates_mcc.html">
+        Mirroring the root aggregates
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_implement_the_mcc_configuration_mcc_refresh_mcc_expansion.html">
+        Implementing the MetroCluster configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_create_a_mirrored_data_aggregate_on_each_node_mcc.html">
+        Creating a mirrored data aggregate on each node
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_configure_the_fc_to_sas_bridges_for_health_monitor.html">
+        Configuring FC-to-SAS bridges for health monitoring
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_move_a_metadata_volume_in_mcc_configurations.html">
+        Moving a metadata volume in MetroCluster configurations
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_check_the_mcc_configuration.html">
+        Checking the MetroCluster configuration
+      </a></li></ul></li></ul></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_check_for_mcc_configuration_errors_with_config_advisor.html">
+        Checking for MetroCluster configuration errors with Config Advisor
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_send_a_custom_autosupport_message_after_add_nodes_to_the_mcc_configuration.html">
+        Sending a custom AutoSupport message after to adding nodes to the MetroCluster configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_verify_switchover_heal_and_switchback.html">
+        Verifying switchover, healing, and switchback
+      </a></li></ul></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/task_expand_a_four_node_mcc_ip_configuration.html">
+        Expanding a four-node MetroCluster IP configuration to an eight-node configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/concept_removing_a_disaster_recovery_group.html">
+        Removing a Disaster Recovery group
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/upgrade/reference_where_to_find_additional_information_mcc_ug.html">
+        Where to find additional information
+      </a></li></ul></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/disaster-recovery/index.html">
+        <div class="na-navbar-padding"> Disaster Recovery</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/disaster-recovery/concept_dr_workflow.html">
+        Workflow for disaster recovery
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/disaster-recovery/task_perform_a_forced_switchover_after_a_disaster.html">
+        Performing a forced switchover after a disaster
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/disaster-recovery/concept_choosing_the_correct_recovery_procedure_parent_concept.html">
+        Choosing the correct recovery procedure
+      </a></li><li class="subfolders "><a href="/us-en/ontap-metrocluster/disaster-recovery/task_recover_from_a_multi_controller_and_or_storage_failure.html">
+        <div class="na-navbar-padding"> Recovering from a multi-controller or storage failure</div>
+      </a>
+      <ul><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/disaster-recovery/task_replace_hardware_and_boot_new_controllers.html">
+        Replacing hardware and booting new controllers
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/disaster-recovery/task_prepare_for_switchback_in_a_mcc_ip_configuration_supertask.html">
+        Preparing for switchback in a MetroCluster IP configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/disaster-recovery/task_prepare_for_switchback_in_a_mcc_fc_configuration_supertask.html">
+        Preparing for switchback in a MetroCluster FC configuration
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/disaster-recovery/task_prepare_the_nodes_for_switchback_in_a_mixed_configuration.html">
+        Preparing the nodes for switchback in a mixed configuration (recovery during transition)
+      </a></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/disaster-recovery/task_complete_recovery.html">
+        Completing recovery
+      </a></li></ul></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/disaster-recovery/task_recover_from_a_non_controller_failure_mcc_dr.html">
+        Recovering from a non-controller failure
+      </a></li></ul></li><li class=" "><a class="na-navbar-padding" href="/us-en/ontap-metrocluster/reference_legal_notices.html">
+        Legal notices
+      </a></li></ul>
+
+<!-- this highlights the active parent class in the navgoco sidebar. this is critical so that the parent expands when you're viewing a page. This must appear below the sidebar code above. Otherwise, if placed inside customscripts.js, the script runs before the sidebar code runs and the class never gets inserted.-->
+<script>$("li.active").parents('li').toggleClass("active");</script>
+
+  </div>
+  
+
+  <div class="ie-content-pane n-doc__component-detail-content n-doc__component-detail-content--show-code">
+    <!-- Begin of page container -->
+    <article class="page-content">
+      
+
+
+
+<div class="n-doc__component-detail-heading-wrap">
+  <h1 class="n-doc__component-detail-heading">Disconnecting the existing DR group from the fabric</h1>
+</div>
+
+
+<p class="page-details">
+  
+    
+    <time datetime="2021-04-12 06:37:04 +0000">04/12/2021</time>
+    
+  
+
+
+  <span>
+    <a target="_blank" href="/us-en/ontap-metrocluster/pdfs/pages/upgrade/task_disconnect_the_exist_dr_group_mcc_expansion.pdf" role="button">
+      <img src="/us-en/ontap-metrocluster/images/pdf.png" width="20" height="20"/>Download PDF of this page</a>
+  </span>
+
+
+</p>
+
+
+<div class="paragraph lead">
+<p>You must disconnect the existing controller modules from the FC switches in the fabric.</p>
+</div>
+<div class="paragraph">
+<p>This task must be performed at each MetroCluster site.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Steps</div>
+<ol class="arabic">
+<li>
+<p>Disable the HBA ports that connect the existing controller modules to the switch fabric undergoing maintenance:</p>
+<div class="paragraph">
+<p><code><strong>storage port disable -node <em>node-name</em> -port <em>port-number</em></strong></code></p>
+</div>
+</li>
+<li>
+<p>On the local FC switches, remove the cables from the ports for the existing controller module&#8217;s HBA, FC-VI, and ATTO bridges.</p>
+<div class="paragraph">
+<p>You should label the cables for easy identification when you recable them. Only the ISL ports should remain cabled.</p>
+</div>
+</li>
+</ol>
+</div>
+
+    </article>
+    <!-- Page Container -->
+  </div>
+
+  
+  <!-- Start Page Toolbar -->
+  <div class="page-nav-toolbar">
+    <div class="page-nav-contribute"  >
+      <div class="page-nav-contribute-title">CONTRIBUTE</div>
+      <a target="_blank" href="https://github.com/NetAppDocs/ontap-metrocluster/blob/main/upgrade/task_disconnect_the_exist_dr_group_mcc_expansion.adoc" class="btn btn-default githubEditButton" role="button"><img src="/us-en/ontap-metrocluster/images/github.png" class="github-icon" />Edit on GitHub</a>
+      <a target="_blank" href="https://github.com/NetAppDocs/ontap-metrocluster/issues/new?body=Page%3A%20[Disconnecting the existing DR group from the fabric](https://docs.netapp.com/us-en/ontap-metrocluster/upgrade/task_disconnect_the_exist_dr_group_mcc_expansion.html)" class="btn btn-default githubEditButton" role="button"><img src="/us-en/ontap-metrocluster/images/github.png" class="github-icon" />Request doc changes</a>
+      <a target="_blank" href="https://docs.netapp.com/us-en/contribute/" class="page-nav-contribute-link"  >Contributor's Guide</a>
+    </div>
+    <div class="page-nav-container">
+      <nav class="page-nav-fixed">
+        <div class="page-nav-title">ON THIS PAGE</div>
+        <div class="page-nav-links">
+          <ul class="page-nav-inner" id="page-menu"></ul>
+        </div>
+      </nav>
+    </div>
+  </div>
+  
+  <div style="clear: both"></div><!-- Main needs to have height -->
+</div>
+
+        </main>
+
+        <footer class="n-footer">
+  <div class="n-footer__bottom">
+    <div class="n-container">
+      <div class="n-footer__bottom-left">
+
+        <div class="n-footer__copyright">
+          <ul class="n-footer__copyright-list">
+            <li class="n-footer__copyright-link">
+            <a href="https://www.netapp.com/us/legal/copyright.aspx">© 2021 NetApp, Inc.</a>
+            </li>
+
+</ul>
+</div>
+<div class="n-footer__social-links">
+<ul class="n-footer__social-link-list">
+<li class="n-footer__social-link-list-item">
+<a class="n-footer__social-link" data-ntap-social="follow-blog" href="https://blog.netapp.com" target="_blank" title="blog" alt="blog">
+<span class="n-footer__social-link-text">blog</span>
+<svg class="n-icon-blog n-footer__social-link-icon" aria-labelledby="title">
+  <title>blog@</title>
+  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/us-en/ontap-metrocluster/common/svg/sprite.svg#blog"></use>
+</svg>
+
+</a>
+</li>
+<li class="n-footer__social-link-list-item">
+<a class="n-footer__social-link" data-ntap-social="follow-community" href="https://community.netapp.com/" target="_blank" title="community" alt="community">
+<span class="n-footer__social-link-text">community</span>
+<svg class="n-icon-community n-footer__social-link-icon" aria-labelledby="title">
+<title>community@</title>
+<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/us-en/ontap-metrocluster/common/svg/sprite.svg#comments"></use>
+</svg>
+
+</a>
+</li>
+<li class="n-footer__social-link-list-item">
+<a class="n-footer__social-link" data-ntap-social="follow-twitter" href="https://twitter.com/netapp" target="_blank" title="twitter" alt="twitter">
+<span class="n-footer__social-link-text">twitter</span>
+<svg class="n-icon-twitter n-footer__social-link-icon" aria-labelledby="title">
+<title>twitter@</title>
+<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/us-en/ontap-metrocluster/common/svg/sprite.svg#twitter"></use>
+</svg>
+
+</a>
+</li>
+<li class="n-footer__social-link-list-item">
+<a class="n-footer__social-link" data-ntap-social="follow-facebook" href="https://www.facebook.com/NetApp" target="_blank" title="facebook" alt="facebook">
+<span class="n-footer__social-link-text">facebook</span>
+<svg class="n-icon-facebook n-footer__social-link-icon" aria-labelledby="title">
+<title>facebook@</title>
+<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/us-en/ontap-metrocluster/common/svg/sprite.svg#facebook"></use>
+</svg>
+
+</a>
+</li>
+<li class="n-footer__social-link-list-item">
+<a class="n-footer__social-link" data-ntap-social="follow-linkedin" href="https://www.linkedin.com/company/netapp" target="_blank" title="linkedin" alt="linkedin">
+<span class="n-footer__social-link-text">linkedin</span>
+<svg class="n-icon-linkedin n-footer__social-link-icon" aria-labelledby="title">
+<title>linkedin@</title>
+<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/us-en/ontap-metrocluster/common/svg/sprite.svg#linkedin"></use>
+</svg>
+
+</a>
+</li>
+<li class="n-footer__social-link-list-item">
+<a class="n-footer__social-link" data-ntap-social="follow-youtube" href="https://www.youtube.com/user/NetAppTV" target="_blank" title="youtube" alt="youtube">
+<span class="n-footer__social-link-text">youtube</span>
+<svg class="n-icon-youtube n-footer__social-link-icon" aria-labelledby="title">
+<title>youtube@</title>
+<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/us-en/ontap-metrocluster/common/svg/sprite.svg#youtube"></use>
+</svg>
+
+</a>
+</li>
+<li class="n-footer__social-link-list-item">
+<a class="n-footer__social-link" data-ntap-social="follow-slideshare" href="https://www.slideshare.net/NetApp" target="_blank" title="slideshare" alt="slideshare">
+<span class="n-footer__social-link-text">slideshare</span>
+<svg class="n-icon-slideshare n-footer__social-link-icon" aria-labelledby="title">
+<title>slideshare@</title>
+<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/us-en/ontap-metrocluster/common/svg/sprite.svg#slideshare"></use>
+</svg>
+
+</a>
+</li>
+</ul>
+</div>
+
+</div>
+<div class="n-footer__bottom-right">
+  <p class="n-footer__fine-print">Have feedback for our website?<a target="_self" href="javascript:netapp_mailto()" class="n-footer__copyright">Let us know</a>
+  <a href="https://docs.netapp.com/us-en/announcements/" class="n-footer__copyright">Announcements</a>
+  </p>
+</div>
+</div>
+</div>
+</footer>
+
+      </div>
+
+      <!-- Elasticsearch JS -->
+      <script type="text/javascript" src='/us-en/ontap-metrocluster/js/bundle.js'></script>
+
+      <!-- Syntax Highlighting -->
+      <script type="text/javascript" src='/us-en/ontap-metrocluster/js/prism.js'></script>
+      <script type="text/javascript" src='/us-en/ontap-metrocluster/js/prism-curl.js'></script>
+    </div>
+    <script>
+      document.body.offsetWidth=1903;
+      cookieLaw = {}
+      cookieLaw.euCountry = "US";
+      cookieLaw.invoke = function(){return false;}
+    </script>
+    <script src='/us-en/ontap-metrocluster/js/www-ntap.js'></script>
+  </body>
+
+  
+</html>
